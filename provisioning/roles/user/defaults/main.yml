@@ -1,0 +1,6 @@
+---
+users:
+  - login: antoine
+    github: MythX
+    dotfiles: "https://github.com/MythX/dotfiles.git"
+

@@ -1,0 +1,41 @@
+- name: create users
+  user: name={{ item.login }} shell=/bin/zsh groups=developers
+  with_items: users
+
+- name: configure sudo
+  command: usermod -aG sudo {{ item.login }}
+  with_items: users
+
+- name: install dotfiles
+  git: >
+    repo="{{ item.dotfiles }}"
+    dest="/home/{{item.login}}/.dotfiles"
+    accept_hostkey=yes
+  when: item.dotfiles is defined
+  with_items: users
+
+- name: fix dotfiles owner
+  command: chown {{item.login}}.developers -R /home/{{item.login}}/.dotfiles
+  when: item.dotfiles is defined
+  with_items: users
+
+- name: configure bash aliases (if no dotfiles)
+  copy: >
+    src=bash_aliases
+    dest="/home/{{ item.login }}/.bash_aliases"
+    owner="{{ item.login }}"
+    group="{{ item.login }}"
+  when: item.dotfiles is not defined
+  with_items: users
+
+- name: set forwarding email address
+  lineinfile: >
+    dest="/home/{{ item.login }}/.forward"
+    regexp='^.+'
+    line="{{ item.email }}"
+    create=yes
+    owner="{{ item.login }}"
+    group="{{ item.login }}"
+  when: item.email is defined
+  with_items: users
+

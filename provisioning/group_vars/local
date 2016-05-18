@@ -1,0 +1,19 @@
+# vi: set ft=yaml :
+---
+
+hostname: devbox
+
+motd_header: |
+ ._____             _               
+ |  __ \           | |              
+ | |  | | _____   _| |__   _____  __
+ | |  | |/ _ \ \ / / `_ \ / _ \ \/ /
+ | |__| |  __/\ V /| |_) | (_) >  < 
+ |_____/ \___| \_/ |_.__/ \___/_/\_\
+
+users:
+  - login: antoine
+    github: mythx
+    email: moser.antoine@gmail.com
+    dotfiles: "https://github.com/mythx/dotfiles.git"
+

@@ -1,0 +1,12 @@
+- name: Graphical devbox bootstrap
+  gather_facts: true
+  hosts: all
+  sudo: true
+  roles:
+    - common
+    - user
+    - common-gui
+    - lockdown
+    - docker
+    - intellij
+    - vboxadditions
